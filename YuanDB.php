@@ -61,7 +61,6 @@ class YuanDB {
 		return static::$instances[$connName];
 	}
 	public function query($query='', $args = []) {
-		$this->rowCount = 0;
 		$query = trim($query);
 		if($query) {
 			$this->resetQuery();
@@ -97,14 +96,28 @@ class YuanDB {
 		$this->conditions = [];
 	}
 	public function insert($fields = []) {
-		$table_name = $this->table;
-		$keys = implode('`, `', array_keys($fields));
-		$values = rtrim(str_repeat('?,',count($fields)),',');
-		$this->bindValues = array_values($fields);
-		$this->sql = "INSERT INTO `{$table_name}` (`{$keys}`) VALUES ({$values})";
-		$this->query();
-		$this->lastInsertId = $this->db->lastInsertId();
-		return $this->lastInsertId;
+        $table_name = $this->table;
+		if(isset($fields[0]) && is_array($fields[0])) {
+			$keys = implode('`, `', array_keys($fields[0]));
+			$values = '';
+			foreach($fields as $row) {
+				asort($row);
+				$values .= '('.rtrim(str_repeat('?,',count($row)),',').'),';
+				$this->bindValues = array_merge($this->bindValues,array_values($row));
+			}
+			$values = trim($values,',');
+			$this->sql = "INSERT INTO `{$table_name}` (`{$keys}`) VALUES {$values}";
+			$this->query();
+			return $this->rowCount();
+		} else {
+			$keys = implode('`, `', array_keys($fields));
+			$values = rtrim(str_repeat('?,',count($fields)),',');
+			$this->bindValues = array_values($fields);
+			$this->sql = "INSERT INTO `{$table_name}` (`{$keys}`) VALUES ({$values})";
+			$this->query();
+			$this->lastInsertId = $this->db->lastInsertId();
+			return $this->lastInsertId;
+		}
 	}
 	public function delete($id=null) {
 		$table_name = $this->table;
