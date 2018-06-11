@@ -84,6 +84,15 @@ $rowCount = YuanDB::conn()->table('test_table')->delete(12);
 $insertId = YuanDB::conn()->table('test_table')->insert(['name'=>'abc','age'=>15]);
 ```
 
+- 批量插入
+
+```php
+$rowCount = YuanDB::conn()->table('test_table')->insert([
+                                                        ['name'=>'abc','age'=>15],
+                                                        ['name'=>'abc2','age'=>20],
+                                                        ]);
+```
+
 - 获取上次执行的sql
 
 ```php
