@@ -268,6 +268,18 @@ class YuanDB {
 		$res = $this->get(1);
 		return isset($res[0]) ? $res[0] : null;
 	}
+    public function lists($name) {
+        $res = [];
+        $list = $this->get();
+        if($list) {
+            foreach($list as $row) {
+                if(isset($row->$name)) {
+                    $res[] = $row->$name;
+                }
+            }
+        }
+        return $res;
+    }
 	public function limit($limit, $offset=null) {
 		if ($offset ==null ) {
 			$this->limit = " LIMIT {$limit}";
