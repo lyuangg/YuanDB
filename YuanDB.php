@@ -213,6 +213,7 @@ class YuanDB {
 	}
 	public function select($columns) {
 		$columns = explode(',', $columns);
+        $columns = array_map(function($val) { return trim($val);}, $columns);
 		$columns = implode('`, `', $columns);
 		$this->columns = "`{$columns}`";
 		return $this;
@@ -270,7 +271,7 @@ class YuanDB {
 	}
     public function lists($name) {
         $res = [];
-        $list = $this->get();
+        $list = $this->select($name)->get();
         if($list) {
             foreach($list as $row) {
                 if(isset($row->$name)) {
@@ -288,6 +289,9 @@ class YuanDB {
 		}
 		return $this;
 	}
+    public function take($size) {
+        return $this->limit($size);
+    }
 	public function orderBy($field_name, $order = 'ASC') {
 		$field_name = trim($field_name);
 		$order =  trim(strtoupper($order));
