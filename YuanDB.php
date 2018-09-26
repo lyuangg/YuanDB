@@ -163,19 +163,19 @@ class YuanDB {
 					} else if(count($condition) == 3) {
 						$conn = '=';
 						if(is_array($condition[2])) {
-							$where .= " $logic ".$condition[1]." $conn (".rtrim(str_repeat('?,',count($condition[2])),',').')';
+							$where .= " $logic `".$condition[1]."` $conn (".rtrim(str_repeat('?,',count($condition[2])),',').')';
 							$this->bindValues = array_merge($this->bindValues,$condition[2]);
 						} else {
-							$where .= " $logic ".$condition[1]." $conn ?";
+							$where .= " $logic `".$condition[1]."` $conn ?";
 							$this->bindValues[] = $condition[2];
 						}
 					} else if(count($condition) == 4) {
 						$conn = $condition[2];
 						if(is_array($condition[3])) {
-							$where .= " $logic ".$condition[1]." $conn (".rtrim(str_repeat('?,',count($condition[3])),',').')';
+							$where .= " $logic `".$condition[1]."` $conn (".rtrim(str_repeat('?,',count($condition[3])),',').')';
 							$this->bindValues = array_merge($this->bindValues,$condition[3]);
 						} else {
-							$where .= " $logic ".$condition[1]." $conn ?";
+							$where .= " $logic `".$condition[1]."` $conn ?";
 							$this->bindValues[] = $condition[3];
 						}
 					}
