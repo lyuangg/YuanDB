@@ -1,0 +1,12 @@
+{
+    "name": "lyuangg/yuandb",
+    "description": "a simple php mysql query builder class",
+    "type": "library",
+    "authors": [
+        {
+            "name": "yuan",
+            "email": "lyuangg@gmail.com"
+        }
+    ],
+    "require": {}
+}
