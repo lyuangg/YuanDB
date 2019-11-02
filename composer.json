@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "classmap": [
-            "lyuangg/yuandb/"
+            "./"
         ]
     },
     "require": {}
