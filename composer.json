@@ -8,5 +8,10 @@
             "email": "lyuangg@gmail.com"
         }
     ],
+    "autoload": {
+        "classmap": [
+            "lyuangg/yuandb/"
+        ]
+    },
     "require": {}
 }
